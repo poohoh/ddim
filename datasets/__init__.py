@@ -4,6 +4,7 @@ import numbers
 import torchvision.transforms as transforms
 import torchvision.transforms.functional as F
 from torchvision.datasets import CIFAR10
+from torchvision.datasets import MNIST
 from datasets.celeba import CelebA
 from datasets.ffhq import FFHQ
 from datasets.lsun import LSUN
@@ -53,6 +54,20 @@ def get_dataset(args, config):
         )
         test_dataset = CIFAR10(
             os.path.join(args.exp, "datasets", "cifar10_test"),
+            train=False,
+            download=True,
+            transform=test_transform,
+        )
+    
+    elif config.data.dataset == "MNIST":
+        dataset = MNIST(
+            os.path.join(args.exp, "datasets", "mnist"),
+            train=True,
+            download=True,
+            transform=tran_transform,
+        )
+        test_dataset = MNIST(
+            os.path.join(args.exp, "datasets", "mnist_test"),
             train=False,
             download=True,
             transform=test_transform,
